@@ -755,7 +755,8 @@ class Core
      */
     public function isStateRequired()
     {
-        return (bool) $this->getConfigData('customer.address.requirements.state');
+        return $this->isCheckoutAddressFieldVisible('state')
+            && (bool) $this->getConfigData('customer.address.requirements.state');
     }
 
     /**
@@ -765,7 +766,45 @@ class Core
      */
     public function isPostCodeRequired()
     {
-        return (bool) $this->getConfigData('customer.address.requirements.postcode');
+        return $this->isCheckoutAddressFieldVisible('postcode')
+            && (bool) $this->getConfigData('customer.address.requirements.postcode');
+    }
+
+    /**
+     * Is the given optional address field (company_name, vat_id, state, postcode) shown at checkout.
+     */
+    public function isCheckoutAddressFieldVisible(string $field): bool
+    {
+        $isVisible = $this->getConfigData("customer.address.checkout_fields.show_{$field}");
+
+        return is_null($isVisible) || (bool) $isVisible;
+    }
+
+    /**
+     * Is email required in the checkout address.
+     */
+    public function isCheckoutEmailRequired(): bool
+    {
+        $isRequired = $this->getConfigData('customer.address.checkout_fields.email_required');
+
+        return is_null($isRequired) || (bool) $isRequired;
+    }
+
+    /**
+     * Is the direct order form (order from the product page without a cart) enabled.
+     */
+    public function isDirectOrderEnabled(): bool
+    {
+        return (bool) $this->getConfigData('sales.checkout.direct_order.enabled');
+    }
+
+    /**
+     * Get the label shown for the city field at checkout.
+     */
+    public function getCheckoutCityLabel(): string
+    {
+        return $this->getConfigData('customer.address.checkout_fields.city_label')
+            ?: trans('shop::app.checkout.onepage.address.city');
     }
 
     /**

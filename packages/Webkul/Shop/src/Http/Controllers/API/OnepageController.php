@@ -64,9 +64,13 @@ class OnepageController extends APIController
 
         $cart = Cart::getCart();
 
+        if ($cart->haveStockableItems() && ! $cart->needsShippingMethod() && $cart->shipping_method) {
+            Cart::resetShippingMethod();
+        }
+
         Cart::collectTotals();
 
-        if ($cart->haveStockableItems()) {
+        if ($cart->needsShippingMethod()) {
             if (! $rates = Shipping::collectRates()) {
                 return new JsonResource([
                     'redirect' => true,
@@ -236,7 +240,7 @@ class OnepageController extends APIController
         }
 
         if (
-            $cart->haveStockableItems()
+            $cart->needsShippingMethod()
             && ! $cart->selected_shipping_rate
         ) {
             throw new \Exception(trans('shop::app.checkout.cart.specify-shipping-method'));

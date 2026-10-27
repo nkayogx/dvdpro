@@ -68,6 +68,10 @@ class SessionController extends Controller
          */
         Event::dispatch('customer.after.login', auth()->guard()->user());
 
+        if (session()->get('url.intended') === route('shop.checkout.onepage.index')) {
+            return redirect()->intended();
+        }
+
         if (core()->getConfigData('customer.settings.login_options.redirected_to_page') == 'account') {
             return redirect()->route('shop.customers.account.profile.index');
         }

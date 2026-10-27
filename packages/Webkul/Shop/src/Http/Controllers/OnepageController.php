@@ -31,7 +31,9 @@ class OnepageController extends Controller
             ! auth()->guard('customer')->check()
             && ! core()->getConfigData('sales.checkout.shopping_cart.allow_guest_checkout')
         ) {
-            return redirect()->route('shop.customer.session.index');
+            session()->flash('info', trans('shop::app.checkout.onepage.login-required.guest-checkout-disabled'));
+
+            return redirect()->guest(route('shop.customer.session.index'));
         }
 
         /**
@@ -63,7 +65,11 @@ class OnepageController extends Controller
                 || ! $cart->hasGuestCheckoutItems()
             )
         ) {
-            return redirect()->route('shop.customer.session.index');
+            session()->flash('info', trans($cart->hasDownloadableItems()
+                ? 'shop::app.checkout.onepage.login-required.downloadable'
+                : 'shop::app.checkout.onepage.login-required.guest-checkout-disabled'));
+
+            return redirect()->guest(route('shop.customer.session.index'));
         }
 
         return view('shop::checkout.onepage.index', compact('cart'));

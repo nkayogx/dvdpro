@@ -224,9 +224,9 @@
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="url"
-                                    rules="required|url"
+                                    rules="required"
                                     :label="trans('admin::app.settings.themes.edit.url')"
-                                    :placeholder="trans('admin::app.settings.themes.edit.url')"
+                                    placeholder="/page/about-us"
                                 />
 
                                 <x-admin::form.control-group.error control-name="url" />

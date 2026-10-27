@@ -140,7 +140,7 @@
                             if (response.data.data.redirect_url) {
                                 window.location.href = response.data.data.redirect_url;
                             } else {
-                                if (this.cart.have_stockable_items) {
+                                if (this.cart.needs_shipping_method) {
                                     this.$emit('processed', response.data.data.shippingMethods);
                                 } else {
                                     this.$emit('processed', response.data.data.payment_methods);
@@ -159,7 +159,7 @@
                 },
 
                 moveToNextStep() {
-                    if (this.cart.have_stockable_items) {
+                    if (this.cart.needs_shipping_method) {
                         this.$emit('processing', 'shipping');
                     } else {
                         this.$emit('processing', 'payment');

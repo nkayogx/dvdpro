@@ -8,7 +8,7 @@ return [
             'bagisto' => 'Bagisto',
             'email' => 'Email',
             'email-not-exist' => 'We cannot find a user with that email address.',
-            'footer' => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
+            'footer' => '',
             'forgot-password-text' => 'If you forgot your password, recover it by entering your email address.',
             'page-title' => 'Forgot your password ?',
             'reset-link-sent' => 'We have e-mailed your reset password link.',
@@ -22,7 +22,7 @@ return [
             'bagisto' => 'Bagisto',
             'confirm-password' => 'Confirm Password',
             'email' => 'Registered Email',
-            'footer' => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
+            'footer' => '',
             'password' => 'Password',
             'submit-btn-title' => 'Reset Password',
             'title' => 'Reset Password',
@@ -33,7 +33,7 @@ return [
             'button-title' => 'Sign In',
             'create-your-account' => 'Create your account',
             'email' => 'Email',
-            'footer' => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
+            'footer' => '',
             'forgot-pass' => 'Forgot Password?',
             'form-login-text' => 'If you have an account, sign in with your email address.',
             'invalid-credentials' => 'Please check your credentials and try again.',
@@ -55,7 +55,7 @@ return [
             'confirm-pass' => 'Confirm Password',
             'email' => 'Email',
             'first-name' => 'First Name',
-            'footer' => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
+            'footer' => '',
             'form-signup-text' => 'If you are new to our store, we glad to have you as member.',
             'last-name' => 'Last Name',
             'page-title' => 'Become User',
@@ -609,7 +609,7 @@ return [
                 'customer-service' => 'Customer Service',
                 'email' => 'Email',
                 'footer-content' => 'Footer Content',
-                'footer-text' => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
+                'footer-text' => '',
                 'locale' => 'Locale',
                 'newsletter-text' => 'Get Ready for our Fun Newsletter!',
                 'order-return' => 'Order and Returns',
@@ -711,6 +711,7 @@ return [
                 'add-to-wishlist' => 'Add To Wishlist',
                 'already-in-compare' => 'Item is already added to compare list.',
                 'new' => 'New',
+                'order-now' => 'Order Now',
                 'review-description' => 'Be the first to review this product',
                 'sale' => 'Sale',
             ],
@@ -760,6 +761,36 @@ return [
         ],
 
         'view' => [
+            'direct-order' => [
+                'address' => 'Address',
+                'address-placeholder' => 'Street, house number, landmark',
+                'change' => 'Change',
+                'full-name' => 'Full Name',
+                'location-pinned' => 'Location pinned',
+                'map-hint' => 'Tap the map or drag the pin to your delivery location.',
+                'map-label' => 'Delivery location on the map',
+                'map-location' => 'Map location',
+                'map-search-placeholder' => 'Search a place, e.g. Mlimani City',
+                'not-found' => 'Place not found. Try another name or tap the map.',
+                'order-now' => 'Order Now – Pay on Delivery',
+                'order-now-amount' => 'Order Now – Pay :amount on Delivery',
+                'order-now-from-amount' => 'Order Now – From :amount, Pay on Delivery',
+                'payment-unavailable' => 'Ordering is not available right now. Please contact us.',
+                'phone' => 'Phone Number',
+                'phone-hint' => 'Use a number we can reach you on to confirm the delivery.',
+                'pin-hint' => 'Tap the pin to choose your location on the map (optional).',
+                'pin-location' => 'Choose location on the map',
+                'product-unavailable' => 'This product cannot be ordered right now. Please choose the options or contact us.',
+                'remove' => 'Remove',
+                'search' => 'Search',
+                'select-options' => 'Please choose all the product options (e.g. size) before ordering.',
+                'shipping-unavailable' => 'Delivery is not available for this product right now. Please contact us.',
+                'success' => 'Thank you! Your order has been placed. We will call you to confirm.',
+                'title' => 'Fill in the form to order',
+                'use-my-location' => 'Use my current location',
+                'use-this-location' => 'Use this location',
+            ],
+
             'type' => [
                 'simple' => [
                     'customizable-options' => [
@@ -1035,6 +1066,7 @@ return [
     'checkout' => [
         'success' => [
             'info' => 'We will email you, your order details and tracking information',
+            'info-phone' => 'We will call you on :phone to confirm your order and delivery.',
             'order-id-info' => 'Your order id is #:order_id',
             'thanks' => 'Thank you for your order!',
             'title' => 'Order successfully placed',
@@ -1164,6 +1196,11 @@ return [
             'index' => [
                 'checkout' => 'Checkout',
                 'home' => 'Home',
+            ],
+
+            'login-required' => [
+                'downloadable' => 'Your cart has a digital product. Please sign in or create an account to continue checkout, so you can access your downloads afterwards.',
+                'guest-checkout-disabled' => 'Please sign in or create an account to continue checkout.',
             ],
 
             'payment' => [

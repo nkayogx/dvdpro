@@ -182,7 +182,7 @@
     <!-- Shipping Rates -->
     {!! view_render_event('bagisto.shop.checkout.onepage.summary.delivery_charges.before') !!}
         
-    <template v-if="displayTax.shipping == 'including_tax'">
+    <template v-if="cart.needs_shipping_method && displayTax.shipping == 'including_tax'">
         <div class="flex justify-between text-right">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')
@@ -194,7 +194,7 @@
         </div>
     </template>
 
-    <template v-else-if="displayTax.shipping == 'both'">
+    <template v-else-if="cart.needs_shipping_method && displayTax.shipping == 'both'">
         <div class="flex justify-between text-right">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')
@@ -212,7 +212,7 @@
         </div>
     </template>
 
-    <template v-else>
+    <template v-else-if="cart.needs_shipping_method">
         <div class="flex justify-between text-right">
             <p class="text-base max-sm:text-sm">
                 @lang('shop::app.checkout.onepage.summary.delivery-charges')

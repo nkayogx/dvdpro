@@ -4565,6 +4565,18 @@ return [
                         'title' => 'Information',
                         'title-info' => '"Lines in a street address" refer to individual segments of an address, often separated by commas, providing location information such as house number, street, city, and more.',
                     ],
+
+                    'checkout-fields' => [
+                        'city-label' => 'City Field Label',
+                        'city-label-info' => 'Leave empty to use the default "City" label, e.g. enter "Region".',
+                        'email-required' => 'Email Required',
+                        'show-company-name' => 'Show Company Name',
+                        'show-postcode' => 'Show Zip/Postcode',
+                        'show-state' => 'Show State',
+                        'show-vat-id' => 'Show Vat ID',
+                        'title' => 'Checkout Address Fields',
+                        'title-info' => 'Choose which address fields customers see at checkout, whether email is required, and how the city field is labelled.',
+                    ],
                 ],
 
                 'captcha' => [
@@ -4827,6 +4839,13 @@ return [
                     'info' => 'Configure shipping methods, including Free Shipping, Flat Rate, and additional options as needed.',
                     'title' => 'Shipping Methods',
 
+                    'general' => [
+                        'page-title' => 'General',
+                        'shipping-methods-enabled' => 'Enable Shipping Methods',
+                        'shipping-methods-enabled-info' => 'Turn off to disable all shipping methods. Checkout then skips the shipping method step and goes straight to payment; customers still enter their delivery address.',
+                        'title-info' => 'Turn all shipping methods on or off at checkout.',
+                    ],
+
                     'free-shipping' => [
                         'description' => 'Description',
                         'page-title' => 'Free Shipping',
@@ -5060,6 +5079,13 @@ return [
                     'title' => 'Checkout',
                     'info' => 'Set guest checkout, Enable or Disable Mini Cart, cart Summary.',
 
+                    'direct-order' => [
+                        'enabled' => 'Enable Direct Order Form',
+                        'enabled-info' => 'Customers order straight from the product page with their full name, phone number, address and map location, and pay on delivery. Turn off "Cart Page" above to remove the cart from the whole shop.',
+                        'info' => 'Let customers order without a cart.',
+                        'title' => 'Direct Order',
+                    ],
+
                     'shopping-cart' => [
                         'cart-page' => 'Cart Page',
                         'cart-page-info' => 'Control Cart Page visibility to enhance user shopping experience.',
@@ -5274,7 +5300,7 @@ return [
             ],
 
             'powered-by' => [
-                'description' => 'Powered by :bagisto, an open-source project by :webkul.',
+                // 'description' => 'Powered by :bagisto, an open-source project by :webkul.',
             ],
         ],
 
@@ -5602,7 +5628,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Powered by <a href="https://bagisto.com/" target="_blank">Bagisto</a>, A Community Project by <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        // 'copy-right' => 'Powered by <a href="https://bagisto.com/" target="_blank">Bagisto</a>, A Community Project by <a href="https://webkul.com/" target="_blank">Webkul</a>',
     ],
 
     'emails' => [

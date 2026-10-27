@@ -143,6 +143,20 @@ class Cart extends Model implements CartContract
     }
 
     /**
+     * Checks if the customer has to choose a shipping method at checkout.
+     */
+    public function needsShippingMethod(): bool
+    {
+        if (! $this->haveStockableItems()) {
+            return false;
+        }
+
+        $isEnabled = core()->getConfigData('sales.carriers.general.shipping_methods_enabled');
+
+        return is_null($isEnabled) || (bool) $isEnabled;
+    }
+
+    /**
      * Checks if cart has only stockable items.
      */
     public function hasOnlyStockableItems(): bool

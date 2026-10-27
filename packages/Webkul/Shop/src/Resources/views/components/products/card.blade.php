@@ -141,7 +141,14 @@
 
                 <!-- Product Actions Section -->
                 <div class="action-items flex items-center justify-between opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 max-md:hidden">
-                    @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                    @if (core()->isDirectOrderEnabled())
+                        <a
+                            class="secondary-button w-full max-w-full p-2.5 text-center text-sm font-medium max-sm:rounded-xl max-sm:p-2"
+                            :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', product.url_key)"
+                        >
+                            @lang('shop::app.components.products.card.order-now')
+                        </a>
+                    @elseif (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
@@ -320,7 +327,14 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.average_ratings.after') !!}
 
-                @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                @if (core()->isDirectOrderEnabled())
+                    <a
+                        class="primary-button whitespace-nowrap px-8 py-2.5"
+                        :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', product.url_key)"
+                    >
+                        @lang('shop::app.components.products.card.order-now')
+                    </a>
+                @elseif (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
 
                     {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 

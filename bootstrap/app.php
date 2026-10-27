@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AddContentLengthForTunnels;
 use App\Http\Middleware\EncryptCookies;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncryptCookies;
@@ -32,6 +33,8 @@ return Application::configure(basePath: dirname(__DIR__))
          * then remove this line.
          */
         $middleware->remove(ConvertEmptyStringsToNull::class);
+
+        $middleware->prepend(AddContentLengthForTunnels::class);
 
         $middleware->append(SecureHeaders::class);
         $middleware->append(CanInstall::class);

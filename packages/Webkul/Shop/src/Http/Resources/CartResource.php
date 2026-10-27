@@ -51,6 +51,7 @@ class CartResource extends JsonResource
             'billing_address' => new AddressResource($this->billing_address),
             'shipping_address' => new AddressResource($this->shipping_address),
             'have_stockable_items' => $this->haveStockableItems(),
+            'needs_shipping_method' => $this->needsShippingMethod(),
             'payment_method' => $this->payment?->method,
             'payment_method_title' => core()->getConfigData('sales.payment_methods.'.$this->payment?->method.'.title'),
         ];

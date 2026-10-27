@@ -55,10 +55,16 @@ class ConfigurationController extends Controller
         $data = $request->all();
 
         if (isset($data['sales']['carriers'])) {
-            $atLeastOneCarrierEnabled = false;
+            $carriers = $data['sales']['carriers'];
 
-            foreach ($data['sales']['carriers'] as $carrier) {
-                if ($carrier['active']) {
+            $areShippingMethodsEnabled = (bool) ($carriers['general']['shipping_methods_enabled'] ?? true);
+
+            unset($carriers['general']);
+
+            $atLeastOneCarrierEnabled = ! $areShippingMethodsEnabled;
+
+            foreach ($carriers as $carrier) {
+                if (! empty($carrier['active'])) {
                     $atLeastOneCarrierEnabled = true;
 
                     break;

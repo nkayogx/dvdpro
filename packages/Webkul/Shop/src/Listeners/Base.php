@@ -3,6 +3,7 @@
 namespace Webkul\Shop\Listeners;
 
 use Illuminate\Support\Facades\Mail;
+use Webkul\Sales\Contracts\Order;
 use Webkul\Sales\Contracts\OrderComment;
 
 class Base
@@ -31,6 +32,15 @@ class Base
      */
     protected function prepareMail($entity, $notification)
     {
+        /**
+         * Orders placed without an email (e.g. direct orders) have no one to send customer mails to.
+         */
+        $order = $entity instanceof Order ? $entity : $entity->order;
+
+        if (empty($order?->customer_email)) {
+            return;
+        }
+
         $customerLocale = $this->getLocale($entity);
 
         $previousLocale = core()->getCurrentLocale()->code;
@@ -39,7 +49,7 @@ class Base
 
         try {
             Mail::queue($notification);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Log::error('Error in Sending Email'.$e->getMessage());
         }
 

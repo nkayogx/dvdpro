@@ -216,7 +216,16 @@ class Cart
             'is_active' => 1,
         ]);
 
-        $guestCart = $this->cartRepository->find(session()->get('cart')->id);
+        $guestCart = $this->cartRepository->find(session()->get('cart')?->id);
+
+        /**
+         * When the guest cart stored in the session no longer exists, there is nothing to merge.
+         */
+        if (! $guestCart) {
+            session()->forget('cart');
+
+            return;
+        }
 
         /**
          * When the logged in customer is not having any of the cart instance previously and are active.

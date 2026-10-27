@@ -26,6 +26,12 @@ class OrderResource extends JsonResource
 
         if ($this->haveStockableItems()) {
             $shippingInformation = [
+                'shipping_address' => (new OrderAddressResource($this->shipping_address))->jsonSerialize(),
+            ];
+        }
+
+        if ($this->haveStockableItems() && $this->selected_shipping_rate) {
+            $shippingInformation += [
                 'shipping_method' => $this->selected_shipping_rate->method,
                 'shipping_title' => $this->selected_shipping_rate->carrier_title.' - '.$this->selected_shipping_rate->method_title,
                 'shipping_description' => $this->selected_shipping_rate->method_description,
@@ -35,7 +41,6 @@ class OrderResource extends JsonResource
                 'base_shipping_amount_incl_tax' => $this->selected_shipping_rate->base_price_incl_tax,
                 'shipping_discount_amount' => $this->selected_shipping_rate->discount_amount,
                 'base_shipping_discount_amount' => $this->selected_shipping_rate->base_discount_amount,
-                'shipping_address' => (new OrderAddressResource($this->shipping_address))->jsonSerialize(),
             ];
         }
 

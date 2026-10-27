@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\SchemeAwareRequestHasher;
 use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
 use Spatie\ResponseCache\Replacers\CsrfTokenReplacer;
 use Spatie\ResponseCache\Serializers\DefaultSerializer;
-use Webkul\FPC\Hasher\DefaultHasher;
 use Webkul\FPC\Replacers\FlashMessagesReplacer;
 
 return [
@@ -92,7 +92,7 @@ return [
      * This class is responsible for generating a hash for a request. This hash
      * is used to look up a cached response.
      */
-    'hasher' => DefaultHasher::class,
+    'hasher' => SchemeAwareRequestHasher::class,
 
     /*
      * This class is responsible for serializing responses.

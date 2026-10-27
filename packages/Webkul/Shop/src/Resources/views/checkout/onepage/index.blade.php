@@ -89,7 +89,7 @@
                         </template>
 
                         <!-- Included Shipping Methods Blade File -->
-                        <template v-if="cart.have_stockable_items && ['shipping', 'payment', 'review'].includes(currentStep)">
+                        <template v-if="cart.needs_shipping_method && ['shipping', 'payment', 'review'].includes(currentStep)">
                             @include('shop::checkout.onepage.shipping')
                         </template>
 

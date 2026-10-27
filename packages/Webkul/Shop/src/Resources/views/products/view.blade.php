@@ -274,7 +274,7 @@
             >
                 <form
                     ref="formData"
-                    @submit="handleSubmit($event, addToCart)"
+                    @submit="handleSubmit($event, {{ core()->isDirectOrderEnabled() ? 'placeDirectOrder' : 'addToCart' }})"
                 >
                     <input
                         type="hidden"
@@ -384,67 +384,71 @@
 
                                 @include('shop::products.view.types.booking')
 
-                                <!-- Product Actions and Quantity Box -->
-                                <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4">
+                                @if (core()->isDirectOrderEnabled())
+                                    @include('shop::products.view.direct-order')
+                                @else
+                                    <!-- Product Actions and Quantity Box -->
+                                    <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4">
 
-                                    {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
+                                        {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
 
-                                    @if ($product->getTypeInstance()->showQuantityBox())
-                                        <x-shop::quantity-changer
-                                            name="quantity"
-                                            value="1"
-                                            class="gap-x-4 rounded-xl px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:rounded-lg max-sm:px-4 max-sm:py-1.5"
-                                        />
-                                    @endif
+                                        @if ($product->getTypeInstance()->showQuantityBox())
+                                            <x-shop::quantity-changer
+                                                name="quantity"
+                                                value="1"
+                                                class="gap-x-4 rounded-xl px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:rounded-lg max-sm:px-4 max-sm:py-1.5"
+                                            />
+                                        @endif
 
-                                    {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
+                                        {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
 
+                                        @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                                            <!-- Add To Cart Button -->
+                                            {!! view_render_event('bagisto.shop.products.view.add_to_cart.before', ['product' => $product]) !!}
+
+                                            <x-shop::button
+                                                type="submit"
+                                                class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                                button-type="secondary-button"
+                                                :loading="false"
+                                                :title="trans('shop::app.products.view.add-to-cart')"
+                                                :disabled="! $product->isSaleable(1)"
+                                                ::loading="isStoring.addToCart"
+                                                ::disabled="isStoring.addToCart"
+                                                @click="is_buy_now=0;"
+                                            />
+
+                                            {!! view_render_event('bagisto.shop.products.view.add_to_cart.after', ['product' => $product]) !!}
+                                        @else
+                                            <button
+                                                type="button"
+                                                class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                                @click="$refs.contactUsModal.open()"
+                                            >
+                                                @lang('shop::app.components.layouts.footer.contact-us')
+                                            </button>
+                                        @endif
+                                    </div>
+
+                                    <!-- Buy Now Button -->
                                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                                        <!-- Add To Cart Button -->
-                                        {!! view_render_event('bagisto.shop.products.view.add_to_cart.before', ['product' => $product]) !!}
+                                        {!! view_render_event('bagisto.shop.products.view.buy_now.before', ['product' => $product]) !!}
 
-                                        <x-shop::button
-                                            type="submit"
-                                            class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
-                                            button-type="secondary-button"
-                                            :loading="false"
-                                            :title="trans('shop::app.products.view.add-to-cart')"
-                                            :disabled="! $product->isSaleable(1)"
-                                            ::loading="isStoring.addToCart"
-                                            ::disabled="isStoring.addToCart"
-                                            @click="is_buy_now=0;"
-                                        />
+                                        @if (core()->getConfigData('catalog.products.storefront.buy_now_button_display'))
+                                            <x-shop::button
+                                                type="submit"
+                                                class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
+                                                button-type="primary-button"
+                                                :title="trans('shop::app.products.view.buy-now')"
+                                                :disabled="! $product->isSaleable(1)"
+                                                ::loading="isStoring.buyNow"
+                                                @click="is_buy_now=1;"
+                                                ::disabled="isStoring.buyNow"
+                                            />
+                                        @endif
 
-                                        {!! view_render_event('bagisto.shop.products.view.add_to_cart.after', ['product' => $product]) !!}
-                                    @else
-                                        <button
-                                            type="button"
-                                            class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
-                                            @click="$refs.contactUsModal.open()"
-                                        >
-                                            @lang('shop::app.components.layouts.footer.contact-us')
-                                        </button>
+                                        {!! view_render_event('bagisto.shop.products.view.buy_now.after', ['product' => $product]) !!}
                                     @endif
-                                </div>
-
-                                <!-- Buy Now Button -->
-                                @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                                    {!! view_render_event('bagisto.shop.products.view.buy_now.before', ['product' => $product]) !!}
-
-                                    @if (core()->getConfigData('catalog.products.storefront.buy_now_button_display'))
-                                        <x-shop::button
-                                            type="submit"
-                                            class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
-                                            button-type="primary-button"
-                                            :title="trans('shop::app.products.view.buy-now')"
-                                            :disabled="! $product->isSaleable(1)"
-                                            ::loading="isStoring.buyNow"
-                                            @click="is_buy_now=1;"
-                                            ::disabled="isStoring.buyNow"
-                                        />
-                                    @endif
-
-                                    {!! view_render_event('bagisto.shop.products.view.buy_now.after', ['product' => $product]) !!}
                                 @endif
 
                                 {!! view_render_event('bagisto.shop.products.view.additional_actions.before', ['product' => $product]) !!}
@@ -601,15 +605,165 @@
                             addToCart: false,
 
                             buyNow: false,
+
+                            directOrder: false,
+                        },
+
+                        directOrder: {
+                            address: '',
+
+                            latitude: '',
+
+                            longitude: '',
+
+                            region: '',
+
+                            quantity: 1,
+
+                            unitPrice: @json(in_array($product->type, ['simple', 'virtual']) ? $product->getTypeInstance()->getProductPrices()['final']['price'] : null),
+
+                            variantPrices: @json($product->type === 'configurable' && core()->isDirectOrderEnabled()
+                                ? collect(app(\Webkul\Product\Helpers\ConfigurableOption::class)->getConfigurationConfig($product)['variant_prices'])->map(fn ($prices) => $prices['final']['price'])
+                                : (object) []),
                         },
                     }
                 },
 
+                computed: {
+                    directOrderButtonTitle() {
+                        const quantity = this.directOrder.quantity;
+
+                        if (this.directOrder.unitPrice) {
+                            return @json(trans('shop::app.products.view.direct-order.order-now-amount'))
+                                .replace(':amount', this.formatDirectOrderAmount(this.directOrder.unitPrice * quantity));
+                        }
+
+                        /**
+                         * No option chosen yet: show the exact amount when every option costs the same, otherwise the lowest.
+                         */
+                        const variantPrices = Object.values(this.directOrder.variantPrices).map(Number);
+
+                        if (! variantPrices.length) {
+                            return @json(trans('shop::app.products.view.direct-order.order-now'));
+                        }
+
+                        const lowestPrice = Math.min(...variantPrices);
+
+                        const translation = lowestPrice === Math.max(...variantPrices)
+                            ? @json(trans('shop::app.products.view.direct-order.order-now-amount'))
+                            : @json(trans('shop::app.products.view.direct-order.order-now-from-amount'));
+
+                        return translation.replace(':amount', this.formatDirectOrderAmount(lowestPrice * quantity));
+                    },
+                },
+
                 mounted() {
                     this.checkWishlistStatus();
+
+                    this.$emitter.on('configurable-variant-selected-event', (variantId) => {
+                        this.directOrder.unitPrice = this.directOrder.variantPrices[variantId] ?? null;
+                    });
                 },
 
                 methods: {
+                    /**
+                     * Format like the server does, using the store's currency symbol (e.g. "TSh") instead of the ISO code.
+                     */
+                    formatDirectOrderAmount(amount) {
+                        const currency = JSON.parse(document.querySelector('meta[name="currency"]').content);
+
+                        if (currency.currency_position || ! currency.symbol) {
+                            return this.$shop.formatPrice(amount);
+                        }
+
+                        return new Intl.NumberFormat(document.documentElement.lang || 'en', {
+                            style: 'currency',
+                            currency: currency.code,
+                            minimumFractionDigits: currency.decimal ?? 2,
+                            maximumFractionDigits: currency.decimal ?? 2,
+                        })
+                            .formatToParts(amount)
+                            .map(part => part.type === 'currency' ? currency.symbol : part.value)
+                            .join('');
+                    },
+
+                    setDirectOrderLocation(location) {
+                        this.directOrder.latitude = location.latitude;
+
+                        this.directOrder.longitude = location.longitude;
+
+                        this.directOrder.region = location.region;
+
+                        /**
+                         * Suggest an address from the map only when the customer has not typed one.
+                         */
+                        if (! this.directOrder.address.trim() && location.address) {
+                            this.directOrder.address = location.address;
+                        }
+                    },
+
+                    clearDirectOrderLocation() {
+                        this.directOrder.latitude = '';
+
+                        this.directOrder.longitude = '';
+
+                        this.directOrder.region = '';
+
+                        this.$refs.directOrderMap.clear();
+                    },
+
+                    /**
+                     * Field errors may sit far above the button (e.g. a product option), so bring the first one into view.
+                     */
+                    showDirectOrderErrors() {
+                        setTimeout(() => {
+                            const error = [...this.$refs.formData.querySelectorAll('p.text-red-500.italic')]
+                                .find(element => element.textContent.trim());
+
+                            if (! error) {
+                                return;
+                            }
+
+                            error.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                            this.$emitter.emit('add-flash', { type: 'warning', message: error.textContent.trim() });
+                        }, 150);
+                    },
+
+                    placeDirectOrder() {
+                        let formData = new FormData(this.$refs.formData);
+
+                        if (formData.has('selected_configurable_option') && ! formData.get('selected_configurable_option')) {
+                            this.$refs.formData.querySelector('[name^="super_attribute"]')
+                                ?.closest('div')
+                                ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                            this.$emitter.emit('add-flash', { type: 'warning', message: @json(trans('shop::app.products.view.direct-order.select-options')) });
+
+                            return;
+                        }
+
+                        this.isStoring.directOrder = true;
+
+                        this.ensureQuantity(formData);
+
+                        this.$axios.post('{{ route("shop.api.direct_order.store") }}', formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then(response => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                window.location.href = response.data.redirect_url;
+                            })
+                            .catch(error => {
+                                this.isStoring.directOrder = false;
+
+                                this.$emitter.emit('add-flash', { type: 'warning', message: error.response.data.message });
+                            });
+                    },
+
                     addToCart(params) {
                         const operation = this.is_buy_now ? 'buyNow' : 'addToCart';
 

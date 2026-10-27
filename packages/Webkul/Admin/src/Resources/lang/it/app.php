@@ -16,7 +16,7 @@ return [
                 'email' => 'Email Registrata',
                 'email-not-exist' => 'Email Non Esistente',
                 'page-title' => 'Password Dimenticata',
-                'powered-by-description' => 'Powered by :bagisto, un progetto open-source di :webkul.',
+                'powered-by-description' => 'Powered by',
                 'reset-link-sent' => 'Link per il ripristino della password inviato',
                 'sign-in-link' => 'Torna al Login?',
                 'submit-btn' => 'Ripristina',

@@ -15,7 +15,7 @@
     <div class="mt-6 grid gap-4 max-md:mt-2 max-md:gap-2.5">
         <!-- Estimate Tax and Shipping -->
         @if (core()->getConfigData('sales.checkout.shopping_cart.estimate_shipping'))
-            <template v-if="cart.have_stockable_items">
+            <template v-if="cart.needs_shipping_method">
                 @include('shop::checkout.cart.summary.estimate-shipping')
             </template>
         @endif
@@ -147,7 +147,7 @@
         <!-- Shipping Rates -->
         {!! view_render_event('bagisto.shop.checkout.onepage.summary.delivery_charges.before') !!}
         
-        <template v-if="displayTax.shipping == 'including_tax'">
+        <template v-if="cart.needs_shipping_method && displayTax.shipping == 'including_tax'">
             <div class="flex justify-between text-right">
                 <p class="text-base max-sm:text-sm">
                     @lang('shop::app.checkout.cart.summary.delivery-charges')
@@ -159,7 +159,7 @@
             </div>
         </template>
 
-        <template v-else-if="displayTax.shipping == 'both'">
+        <template v-else-if="cart.needs_shipping_method && displayTax.shipping == 'both'">
             <div class="flex justify-between text-right">
                 <p class="text-base max-sm:text-sm">
                     @lang('shop::app.checkout.cart.summary.delivery-charges')
@@ -177,7 +177,7 @@
             </div>
         </template>
 
-        <template v-else>
+        <template v-else-if="cart.needs_shipping_method">
             <div class="flex justify-between text-right">
                 <p class="text-base max-sm:text-sm">
                     @lang('shop::app.checkout.cart.summary.delivery-charges')

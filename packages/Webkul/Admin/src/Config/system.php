@@ -1273,6 +1273,51 @@ return [
             ],
         ],
     ], [
+        'key' => 'customer.address.checkout_fields',
+        'name' => 'admin::app.configuration.index.customer.address.checkout-fields.title',
+        'info' => 'admin::app.configuration.index.customer.address.checkout-fields.title-info',
+        'sort' => 3,
+        'fields' => [
+            [
+                'name' => 'show_company_name',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.show-company-name',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ], [
+                'name' => 'show_vat_id',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.show-vat-id',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ], [
+                'name' => 'show_state',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.show-state',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ], [
+                'name' => 'show_postcode',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.show-postcode',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ], [
+                'name' => 'email_required',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.email-required',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ], [
+                'name' => 'city_label',
+                'title' => 'admin::app.configuration.index.customer.address.checkout-fields.city-label',
+                'info' => 'admin::app.configuration.index.customer.address.checkout-fields.city-label-info',
+                'type' => 'text',
+                'channel_based' => true,
+                'locale_based' => true,
+            ],
+        ],
+    ], [
         'key' => 'customer.captcha',
         'name' => 'admin::app.configuration.index.customer.captcha.title',
         'info' => 'admin::app.configuration.index.customer.captcha.info',
@@ -1842,6 +1887,21 @@ return [
         'info' => 'admin::app.configuration.index.sales.shipping-methods.info',
         'icon' => 'settings/shipping-method.svg',
         'sort' => 2,
+    ], [
+        'key' => 'sales.carriers.general',
+        'name' => 'admin::app.configuration.index.sales.shipping-methods.general.page-title',
+        'info' => 'admin::app.configuration.index.sales.shipping-methods.general.title-info',
+        'sort' => 0,
+        'fields' => [
+            [
+                'name' => 'shipping_methods_enabled',
+                'title' => 'admin::app.configuration.index.sales.shipping-methods.general.shipping-methods-enabled',
+                'info' => 'admin::app.configuration.index.sales.shipping-methods.general.shipping-methods-enabled-info',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 1,
+            ],
+        ],
     ], [
         'key' => 'sales.carriers.free',
         'name' => 'admin::app.configuration.index.sales.shipping-methods.free-shipping.page-title',
@@ -3067,6 +3127,21 @@ return [
                 'type' => 'text',
                 'default' => 'Get Up To 30% OFF on your 1st order',
                 'validation' => 'max:200',
+            ],
+        ],
+    ], [
+        'key' => 'sales.checkout.direct_order',
+        'name' => 'admin::app.configuration.index.sales.checkout.direct-order.title',
+        'info' => 'admin::app.configuration.index.sales.checkout.direct-order.info',
+        'sort' => 4,
+        'fields' => [
+            [
+                'name' => 'enabled',
+                'title' => 'admin::app.configuration.index.sales.checkout.direct-order.enabled',
+                'info' => 'admin::app.configuration.index.sales.checkout.direct-order.enabled-info',
+                'type' => 'boolean',
+                'channel_based' => true,
+                'default' => 0,
             ],
         ],
     ], [

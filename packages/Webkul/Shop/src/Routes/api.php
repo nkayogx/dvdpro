@@ -7,6 +7,7 @@ use Webkul\Shop\Http\Controllers\API\CategoryController;
 use Webkul\Shop\Http\Controllers\API\CompareController;
 use Webkul\Shop\Http\Controllers\API\CoreController;
 use Webkul\Shop\Http\Controllers\API\CustomerController;
+use Webkul\Shop\Http\Controllers\API\DirectOrderController;
 use Webkul\Shop\Http\Controllers\API\OnepageController;
 use Webkul\Shop\Http\Controllers\API\ProductController;
 use Webkul\Shop\Http\Controllers\API\ReviewController;
@@ -90,6 +91,10 @@ Route::group(['prefix' => 'api'], function () {
 
         Route::post('orders', 'storeOrder')->name('shop.checkout.onepage.orders.store');
     });
+
+    Route::post('direct-order', [DirectOrderController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('shop.api.direct_order.store');
 
     /**
      * Login routes.

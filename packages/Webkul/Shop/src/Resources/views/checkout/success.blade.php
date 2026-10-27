@@ -41,6 +41,8 @@
 			<p class="text-xl text-zinc-500 max-md:text-center max-md:text-xs">
 				@if (! empty($order->checkout_message))
 					{!! nl2br($order->checkout_message) !!}
+				@elseif (empty($order->customer_email))
+					@lang('shop::app.checkout.success.info-phone', ['phone' => $order->billing_address?->phone])
 				@else
 					@lang('shop::app.checkout.success.info')
 				@endif
